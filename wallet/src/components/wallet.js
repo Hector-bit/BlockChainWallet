@@ -2,19 +2,30 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function Wallet() {
-    const [info, setInfo] = useState({});
-
-    axios
+    const [transactions, setTransactions] = useState({});
+    const [id, setId] = useState(null);
+    const [total, setTotal] = useState(0);
+    
+    function submitID(){
+        console.log('clickedsaldfkjasl')
+    }
+    useEffect(() => {
+        axios
         .get('http://localhost:5000/chain')
         .then(res => (
             console.log(res),
-            setInfo(res)
+            setTransactions(res.data.chain)
         ))
         .catch(err => console.log('ERROR: ', err))
+    },[]);
 
-    console.log(info, 'THIS IS INFO')
+    console.log(transactions, 'THIS IS transactions')
 
     return (
-        <div>Hello this is the Wallet</div>
+        <div>
+            <input placeholder='ID' onChange={setId(value)}/>
+            <div>Wallet ID: {id}</div>
+            <div>Total in Wallet: {total}</div>
+        </div>
     )
 }
